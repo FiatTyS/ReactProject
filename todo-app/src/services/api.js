@@ -1,20 +1,10 @@
-const API_URL = "http://localhost:3000/todos";
+import { configureStore } from "@reduxjs/toolkit";
+import todoReducer from "./todoSlice";
 
-export const getTodos = async () => (await fetch(API_URL)).json();
+const store = configureStore({
+  reducer: {
+    todos: todoReducer,
+  },
+});
 
-export const addTodo = async (todo) =>
-  fetch(API_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(todo),
-  });
-
-export const updateTodo = async (id, todo) =>
-  fetch(`${API_URL}/${id}`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(todo),
-  });
-
-export const deleteTodo = async (id) =>
-  fetch(`${API_URL}/${id}`, { method: "DELETE" });
+export default store;
