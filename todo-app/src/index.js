@@ -1,26 +1,15 @@
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import TodoListPage from "./pages/TodoListPage";
-import EditTodoPage from "./pages/EditTodoPage";
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { Provider } from "react-redux";
+import { store } from "./store/store";
+import App from "./App";
+import "./App.css";
 
-function App() {
-  return (
-    <BrowserRouter>
-      <header className="header">
-        <Link to="/"><h2>Todo App</h2></Link>
-        <nav>
-          <Link to="/">รายการ</Link>
-          <Link to="/edit/new">เพิ่ม</Link>
-        </nav>
-      </header>
-
-      <main>
-        <Routes>
-          <Route path="/" element={<TodoListPage />} />
-          <Route path="/edit/:id" element={<EditTodoPage />} />
-        </Routes>
-      </main>
-    </BrowserRouter>
-  );
-}
-
-export default App;
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <React.StrictMode>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </React.StrictMode>
+);

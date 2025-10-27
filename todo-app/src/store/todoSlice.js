@@ -1,26 +1,45 @@
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import TodoListPage from "./pages/TodoListPage";
-import EditTodoPage from "./pages/EditTodoPage";
+import { createSlice } from "@reduxjs/toolkit";
 
-function App() {
-  return (
-    <BrowserRouter>
-      <header className="header">
-        <Link to="/"><h2>Todo App</h2></Link>
-        <nav>
-          <Link to="/">รายการ</Link>
-          <Link to="/edit/new">เพิ่ม</Link>
-        </nav>
-      </header>
+const initialState = {
+  items: [],
+  loading: false,
+  error: null,
+};
 
-      <main>
-        <Routes>
-          <Route path="/" element={<TodoListPage />} />
-          <Route path="/edit/:id" element={<EditTodoPage />} />
-        </Routes>
-      </main>
-    </BrowserRouter>
-  );
-}
+const todoSlice = createSlice({
+  name: "todos",
+  initialState,
+  reducers: {
+    setTodos(state, action) {
+      state.items = action.payload;
+      state.error = null;
+    },
+    addTodo(state, action) {
+      state.items.push(action.payload);
+      state.error = null;
+    },
+    updateTodo(state, action) {
+      const idx = state.items.findIndex((t) => t.id === action.payload.id);
+      if (idx !== -1) {
+        state.items[idx] = action.payload;
+      }
+      state.error = null;
+    },
+    deleteTodo(state, action) {
+      state.items = state.items.filter((t) => t.id !== action.payload);
+      state.error = null;
+    },
+    setLoading(state, action) {
+      state.loading = action.payload;
+    },
+    setError(state, action) {
+      state.error = action.payload;
+      state.loading = false;
+    },
+  },
+});
 
-export default App;
+export const { setTodos, addTodo, updateTodo, deleteTodo, setLoading, setError } =
+  todoSlice.actions;
+
+export default todoSlice.reducer;

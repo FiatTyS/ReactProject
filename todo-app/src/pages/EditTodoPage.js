@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { updateTodo as updateTodoAction } from "../store/todoSlice";
-import { getTodoById, updateTodoApi } from "../services/api";
+import { updateTodo as updateTodoAction, addTodo as addTodoAction } from "../store/todoSlice";
+import { getTodoById, updateTodoApi, addTodoApi } from "../services/api";
 import TodoForm from "../components/TodoForm";
 
 export default function EditTodoPage() {
@@ -34,7 +34,8 @@ export default function EditTodoPage() {
   const handleSubmit = async (values) => {
     try {
       if (isNew) {
-        // ถ้าต้องการเพิ่มจากหน้านี้ ให้เรียก addTodoApi แล้ว dispatch
+        const res = await addTodoApi(values);
+        dispatch(addTodoAction(res));
         navigate("/");
       } else {
         const res = await updateTodoApi(values.id, values);
