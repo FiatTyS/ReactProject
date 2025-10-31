@@ -64,9 +64,9 @@ export default function TodoListPage() {
 
   return (
     <div className="container">
-      <h1>📋 รายการงาน</h1>
+      <h1> รายการงาน</h1>
       <Link to="/edit/new" className="link-add">
-        ➕ เพิ่มงาน (หน้าแยก)
+         เพิ่มงาน (หน้าแยก)
       </Link>
 
       <h2>เพิ่มเร็ว ๆ</h2>
